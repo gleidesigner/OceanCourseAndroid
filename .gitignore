@@ -34,7 +34,7 @@ proguard/
 *.log
 
 # Android Studio
-.idea*
+.idea
 .gradle
 /*.gradle
 gradle
