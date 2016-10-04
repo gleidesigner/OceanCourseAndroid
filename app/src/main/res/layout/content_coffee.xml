@@ -31,67 +31,109 @@
                 android:hint="@string/name_hint"
                 android:id="@+id/name"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/toppings"/>
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/whipped_cream"
-                android:id="@+id/whippedCream"/>
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/chocolate"
-                android:id="@+id/chocolate"/>
-
-            <TextView
-                android:text="Quantidade"
-                android:layout_height="48dp"
-                android:layout_width="match_parent" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="-"
-                    android:onClick="decrement"/>
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/quantity_text_view"
-                    android:layout_width="wrap_content"
+                    android:textStyle="bold|italic"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="8dp"
-                    android:text="0"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:text="@string/toppings"/>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bkg_default"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:text="+"
-                    android:id="@+id/add"
-                    android:onClick="increment"/>
+                    <CheckBox
+                        android:layout_gravity="start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/whipped_cream"
+                        android:id="@+id/whippedCream"/>
+                    <View
+                        android:layout_marginLeft="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorAccent"/>
+                    <CheckBox
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/chocolate"
+                        android:id="@+id/chocolate"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginBottom="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textStyle="bold|italic"
+                    android:text="Quantidade"
+                    android:layout_height="26dp"
+                    android:layout_width="wrap_content" />
+                <LinearLayout
+                    android:weightSum="5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+
+                    <Button
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="-"
+                        android:onClick="decrement"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/quantity_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/black"
+                        android:textSize="36sp" />
+
+                    <Button
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text="+"
+                        android:id="@+id/add"
+                        android:onClick="increment"/>
+                </LinearLayout>
             </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Summary"
+                android:textStyle="bold|italic"
+                android:id="@+id/summaryTitle"/>
+            <TextView
+                android:background="@color/bkg_default"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
                 android:id="@+id/summaryOrder"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Order"
+                android:text="@string/Order"
                 android:onClick="submitOrder"/>
         </LinearLayout>
 

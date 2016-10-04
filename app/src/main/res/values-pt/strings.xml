@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Ocean Coffee</string>
+
+    <string name="navigation_drawer_close">Fechar</string>
+    <string name="navigation_drawer_open">Abrir</string>
+
+    <string name="action_settings">Configuração</string>
+    <string name="chocolate">Chocolate</string>
+    <string name="done">Concluído</string>
+    <string name="name_hint">Nome</string>
+    <string name="toppings">Sobremessa</string>
+    <string name="whipped_cream">Chantilly</string>
+    <string name="reminder">Lembrete</string>
+    <string name="hello_world">Olá mundo</string>
+    <string name="OrderCoffee">Solicitar Café</string>
+    <string name="Order">Solicitar</string>
+
+</resources>
