@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_hint">name</string>
+    <string name="toppings">toppings</string>
+    <string name="whipped_cream">whipped cream</string>
+    <string name="chocolate">chocolate</string>
+</resources>

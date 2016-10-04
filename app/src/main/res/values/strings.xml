@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">AndroidCourseOcean</string>
+    <string name="app_name">My Application</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="action_settings">Settings</string>
+    <string name="hello_world">Hoje é o dia do meu aniversário</string>
+    <string name="reminder">reminder</string>
+    <string name="done">done</string>
     <string name="name_hint">name</string>
     <string name="toppings">toppings</string>
     <string name="whipped_cream">whipped cream</string>
     <string name="chocolate">chocolate</string>
-    <string name="name_user">Nome: Gleides</string>
 </resources>
