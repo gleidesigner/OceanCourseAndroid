@@ -18,7 +18,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private static final int PRICE_BY_CUP = 5;
-    int quantity;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    int quantity = 1;
     EditText name;
     TextView summary;
     CheckBox whippedCream;
@@ -49,13 +50,14 @@ public class MainActivity extends AppCompatActivity {
         whippedCream = (CheckBox) findViewById(R.id.whippedCream);
         chocolate = (CheckBox) findViewById(R.id.chocolate);
         quantityItem = (TextView) findViewById(R.id.quantity_text_view);
+        quantityItem.setText(Integer.toString(quantity));
     }
 
     public void submitOrder(View view) {
-        int price = calculatePrice(quantity, chocolate.isChecked(), whippedCream.isChecked());
-        String summaryOrder = createdOrderSummary(quantity, price, chocolate.isChecked(), whippedCream.isChecked());
+        int price = calculatePrice();
+        String summaryOrder = createdOrderSummary(price);
         summary.setText(summaryOrder);
-        Log.i("MainActivity","log: " + price);
+        Log.i(TAG,"Price: " + price);
 
 /*        Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("sms:992640530"));
@@ -76,38 +78,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void increment(View view) {
-        if(quantity >= 100) {
+        if(quantity < 100) {
+            quantity++;
+            Log.i(TAG,"incrementQty: " + quantity);
+            displayQuantity();
+        }else {
             Toast.makeText(this, "Não pode ser mais que 100 copos", Toast.LENGTH_LONG).show();
-            return;
         }
-        quantity++;
-        displayQuantity();
     }
 
     public void decrement(View view) {
-        if(quantity < 0) return;
-        quantity--;
-        displayQuantity();
+        if(quantity > 0){
+            quantity--;
+            Log.i(TAG,"decrementQty: " + quantity);
+            displayQuantity();
+        }else {
+            Toast.makeText(this, "Não pode ter valor negativo", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void displayQuantity() {
+        Log.i(TAG,"Qty: " + quantity);
         quantityItem.setText(Integer.toString(quantity));
     }
 
-    public String createdOrderSummary(int quantity, int price, boolean chocolateChecked, boolean whippedCreamChecked) {
+    public String createdOrderSummary(int price) {
         String msg = name.getText().toString();
-        msg += "\nAdd Chocolate? " + chocolateChecked;
-        msg += "\nAdd Whipped Cream? " + whippedCreamChecked;
+        msg += "\nAdd Chocolate? " + chocolate.isChecked();
+        msg += "\nAdd Whipped Cream? " + whippedCream.isChecked();
         msg += "\nQuantity: " + quantity;
         msg += "\nTotal: " + price;
         return msg;
     }
 
-    private int calculatePrice(int quantity, boolean isChocolate, boolean isCream) {
-        if (isChocolate)
+    private int calculatePrice() {
+        if (chocolate.isChecked())
             quantity++;
 
-        if (isCream)
+        if (whippedCream.isChecked())
             quantity++;
 
         return quantity * PRICE_BY_CUP;
