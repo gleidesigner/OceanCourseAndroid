@@ -45,3 +45,5 @@ proguard/
 /gradlew*
 
 
+libs/
+src/main/res/drawable/
