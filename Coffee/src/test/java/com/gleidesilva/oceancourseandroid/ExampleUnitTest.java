@@ -1,4 +1,4 @@
-package com.gleidesilva.oceancourseandroid;
+package com.gleidesilva.coffee;
 
 import org.junit.Test;
 

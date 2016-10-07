@@ -1,4 +1,4 @@
-package com.gleidesilva.oceancourseandroid;
+package com.gleidesilva.coffee;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.gleidesilva.oceancourseandroid", appContext.getPackageName());
+        assertEquals("com.gleidesilva.coffee", appContext.getPackageName());
     }
 }

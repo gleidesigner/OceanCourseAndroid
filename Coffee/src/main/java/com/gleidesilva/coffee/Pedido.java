@@ -1,4 +1,4 @@
-package com.gleidesilva.oceancourseandroid;
+package com.gleidesilva.coffee;
 
 /**
  * Created by gleides on 06/10/16.
