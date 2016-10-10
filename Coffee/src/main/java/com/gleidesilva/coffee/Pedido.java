@@ -10,13 +10,23 @@ public class Pedido {
     private boolean isCreme;
     private boolean isChocolate;
     private String nome;
+    private String hora;
 
-    public Pedido(int quantidade, int preco, boolean hasCreme, boolean hasChocolate, String nome) {
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public Pedido(int quantidade, int preco, boolean hasCreme, boolean hasChocolate, String nome, String hora) {
         this.quantidade = quantidade;
         this.preco = preco;
         this.isCreme = hasCreme;
         this.isChocolate = hasChocolate;
         this.nome = nome;
+        this.hora = hora;
     }
 
     public int getQuantidade() {

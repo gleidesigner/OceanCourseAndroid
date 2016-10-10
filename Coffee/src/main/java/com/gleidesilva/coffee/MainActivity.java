@@ -13,21 +13,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity {
-    private static final int PRICE_BY_CUP = 5;
     private static final String TAG = MainActivity.class.getSimpleName();
-    int quantity = 1;
+    int PriceByCup = 5;
+    int quantity = 0;
     EditText name;
     TextView summary;
     CheckBox whippedCream;
     CheckBox chocolate;
     TextView quantityItem;
+    ArrayList<Pedido> mPedidos = new ArrayList<>();
+    Pedido mPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -54,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         int price = calculatePrice();
         String summaryOrder = createdOrderSummary(price);
         summary.setText(summaryOrder);
+        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+        String date = df.format(Calendar.getInstance().getTime());
+        //mPedido = new Pedido(quantity,price,chocolate.isChecked(),whippedCream.isChecked(),name.getText().toString(), System.currentTimeMillis());
+        mPedidos.add(mPedido);
         Log.i(TAG,"Price: " + price);
 
 /*        Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -67,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
         intentEmail.putExtra(intentEmail.EXTRA_TEXT, summaryOrder);
         startActivity(intentEmail);*/
 
-
-    }
-
-    public void displayPrice() {
 
     }
 
@@ -110,12 +117,12 @@ public class MainActivity extends AppCompatActivity {
 
     private int calculatePrice() {
         if (chocolate.isChecked())
-            quantity++;
+            PriceByCup += 2;
 
         if (whippedCream.isChecked())
-            quantity++;
+            PriceByCup++;
 
-        return quantity * PRICE_BY_CUP;
+        return quantity * PriceByCup;
     }
 
     @Override
