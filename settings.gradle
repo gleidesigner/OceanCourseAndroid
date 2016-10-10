@@ -1,1 +1,1 @@
-include ':Coffee', ':BooksLibrary'
+include ':Coffee', ':BooksLibrary', ':LearnDesignPatterns'
