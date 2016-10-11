@@ -12,10 +12,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -101,10 +98,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
 
         private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-            ImageView bmImage;
+            ImageView imageView;
 
-            public DownloadImageTask(ImageView bmImage) {
-                this.bmImage = bmImage;
+            public DownloadImageTask(ImageView imageView) {
+                this.imageView = imageView;
             }
 
             @Override
@@ -127,7 +124,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
 
             protected void onPostExecute(Bitmap result) {
-                bmImage.setImageBitmap(result);
+                imageView.setImageBitmap(result);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }
