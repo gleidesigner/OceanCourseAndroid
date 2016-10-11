@@ -1,7 +1,7 @@
 package com.gleidesilva.bookslibrary;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     Book mBook;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +28,20 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     public ArrayList<Book> iniciaLista(){
         ArrayList<Book> books = new ArrayList<>();
+        String urlBookCover = "http://pngimg.com/upload/book_PNG2118.png";
+
         mBook = new Book();
         mBook.setTitulo("MOODLE 2 para Autores e Tutores - 3ª Edição");
         mBook.setAutor("Robson Santos da Silva");
         mBook.setAno(2013);
         mBook.setPagina(168);
-        mBook.setCapa("http://172.25.1.17/oceanbook/moodle2.jpg");
+        //mBook.setCapa("http://172.25.1.17/oceanbook/moodle2.jpg");
+        mBook.setCapa(urlBookCover);
         books.add(mBook);
 
         mBook = new Book();
@@ -44,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         mBook.setAutor("Pramod J. Sadalage / Martin Fowler");
         mBook.setAno(2013);
         mBook.setPagina(216);
-        mBook.setCapa("http://172.25.1.17/oceanbook/NoSQLEssencial.png");
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/NoSQLEssencial.png");
         books.add(mBook);
 
         mBook = new Book();
@@ -52,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         mBook.setAutor("Michael Schmalz");
         mBook.setAno(2012);
         mBook.setPagina(120);
-        mBook.setCapa("http://172.25.1.17/oceanbook/BancoDeDadosComC.jpg");
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/BancoDeDadosComC.jpg");
         books.add(mBook);
 
         mBook = new Book();
@@ -60,7 +67,8 @@ public class MainActivity extends AppCompatActivity {
         mBook.setAutor("Juliano Niederauer");
         mBook.setAno(2013);
         mBook.setPagina(192);
-        mBook.setCapa("http://172.25.1.17/oceanbook/JovemeBem-Sucedido.jpg");
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/JovemeBem-Sucedido.jpg");
         books.add(mBook);
 
         mBook = new Book();
@@ -68,7 +76,53 @@ public class MainActivity extends AppCompatActivity {
         mBook.setAutor("Jonathan Fields");
         mBook.setAno(2013);
         mBook.setPagina(208);
-        mBook.setCapa("http://172.25.1.17/oceanbook/LidandocomaIncerteza.png");
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/LidandocomaIncerteza.png");
+        books.add(mBook);
+
+        mBook = new Book();
+        mBook.setTitulo("MOODLE 2 para Autores e Tutores - 3ª Edição");
+        mBook.setAutor("Robson Santos da Silva");
+        mBook.setAno(2013);
+        mBook.setPagina(168);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/moodle2.jpg");
+        mBook.setCapa(urlBookCover);
+        books.add(mBook);
+
+        mBook = new Book();
+        mBook.setTitulo("NoSQL Essencial");
+        mBook.setAutor("Pramod J. Sadalage / Martin Fowler");
+        mBook.setAno(2013);
+        mBook.setPagina(216);
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/NoSQLEssencial.png");
+        books.add(mBook);
+
+        mBook = new Book();
+        mBook.setTitulo("Fundamentos de Bancos de Dados com C#");
+        mBook.setAutor("Michael Schmalz");
+        mBook.setAno(2012);
+        mBook.setPagina(120);
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/BancoDeDadosComC.jpg");
+        books.add(mBook);
+
+        mBook = new Book();
+        mBook.setTitulo("Jovem e Bem-Sucedido");
+        mBook.setAutor("Juliano Niederauer");
+        mBook.setAno(2013);
+        mBook.setPagina(192);
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/JovemeBem-Sucedido.jpg");
+        books.add(mBook);
+
+        mBook = new Book();
+        mBook.setTitulo("Lidando com a Incertezao");
+        mBook.setAutor("Jonathan Fields");
+        mBook.setAno(2013);
+        mBook.setPagina(208);
+        mBook.setCapa(urlBookCover);
+        //mBook.setCapa("http://172.25.1.17/oceanbook/LidandocomaIncerteza.png");
         books.add(mBook);
 
         return books;

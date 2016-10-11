@@ -1,12 +1,21 @@
 package com.gleidesilva.bookslibrary;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -14,9 +23,10 @@ import java.util.ArrayList;
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
-    ArrayList<Book> lista;
-    public MyAdapter(ArrayList<Book> lista) {
-        this.lista = lista;
+    ArrayList<Book> bookList;
+
+    public MyAdapter(ArrayList<Book> bookList) {
+        this.bookList = bookList;
     }
 
     @Override
@@ -27,19 +37,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, int position) {
-        Book book = lista.get(position);
+        Book itemBookList = bookList.get(position);
 
         //Seta os valores do livro para o layout dentro do holder
-        holder.setTxtTitle(book.getTitulo())
-                .setTxtAutor(book.getAutor())
-                .setTxtPagina(book.getPagina())
-                .setTxtAno(book.getAno())
-                .setTImgBook(book.getCapa());
+        holder.setTxtTitle(itemBookList.getTitulo())
+                .setTxtAutor(itemBookList.getAutor())
+                .setTxtPagina(itemBookList.getPagina())
+                .setTxtAno(itemBookList.getAno())
+                .setTImgBook(itemBookList.getCapa());
     }
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return bookList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -48,7 +58,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private TextView txtPagina;
         private TextView txtAno;
         private ImageView imgCapa;
-
+        ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
             //Recupera as referencias do layout
@@ -57,6 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtPagina = (TextView) itemView.findViewById(R.id.pagina);
             txtAno = (TextView) itemView.findViewById(R.id.ano);
             imgCapa = (ImageView) itemView.findViewById(R.id.imageBook);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.my_progress_bar);
         }
 
         public ViewHolder setTxtTitle(String title) {
@@ -83,9 +94,42 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             return this;
         }
 
-        public ViewHolder setTImgBook(String capa) {
+        public ViewHolder setTImgBook(String urlBookCover) {
             if (imgCapa == null) return this;
+            new DownloadImageTask(imgCapa).execute(urlBookCover);
             return this;
+        }
+
+        private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+            ImageView bmImage;
+
+            public DownloadImageTask(ImageView bmImage) {
+                this.bmImage = bmImage;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            protected Bitmap doInBackground(String... urls) {
+                String urldisplay = urls[0];
+                Bitmap mImage = null;
+                try {
+                    InputStream in = new java.net.URL(urldisplay).openStream();
+                    mImage = BitmapFactory.decodeStream(in);
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                    e.printStackTrace();
+                }
+                return mImage;
+            }
+
+            protected void onPostExecute(Bitmap result) {
+                bmImage.setImageBitmap(result);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
         }
 
     }
