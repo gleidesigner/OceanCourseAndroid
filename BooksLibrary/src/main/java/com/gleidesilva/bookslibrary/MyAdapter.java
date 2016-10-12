@@ -1,5 +1,6 @@
 package com.gleidesilva.bookslibrary;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -21,9 +22,11 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     ArrayList<Book> bookList;
+    private Context context;
 
-    public MyAdapter(ArrayList<Book> bookList) {
+    public MyAdapter(Context context, ArrayList<Book> bookList) {
         this.bookList = bookList;
+        this.context = context;
     }
 
     @Override
@@ -37,7 +40,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         Book itemBookList = bookList.get(position);
 
         //Seta os valores do livro para o layout dentro do holder
-        holder.setTxtTitle(itemBookList.getTitulo())
+        holder
+                .setTxtTitle(itemBookList.getTitulo())
                 .setTxtAutor(itemBookList.getAutor())
                 .setTxtPagina(itemBookList.getPagina())
                 .setTxtAno(itemBookList.getAno())
@@ -94,6 +98,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder setTImgBook(String urlBookCover) {
             if (imgCapa == null) return this;
             new DownloadImageTask(imgCapa).execute(urlBookCover);
+            //Picasso.with(context).load(urlBookCover).resize(200,200).centerCrop().into(imgCapa);
             return this;
         }
 
