@@ -7,8 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ProgressBar;
+
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.http.Request;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 HttpRequest.GET("http://gitlab.oceanmanaus.com/snippets/1/raw");
             }
         }).start();*/
+
+        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", new Request.RequestListener() {
+            @Override
+            public void onRequestOk(String result, JSONObject jsonObject, int i) {
+                Log.d("Request",result);
+            }
+        }).get().send();
 
     }
 

@@ -23,12 +23,12 @@ public class HttpRequest {
             conexao.setRequestMethod("GET");
             conexao.connect();
 
-            int resposta = conexao.getResponseCode();
+            int response = conexao.getResponseCode();
 
-            if(resposta == HttpURLConnection.HTTP_OK){
+            if(response == HttpURLConnection.HTTP_OK){
                 InputStream is = conexao.getInputStream();
                 result = bytesParaString(is);
-                Log.i("Resultado: ", result);
+                Log.i("Http response: ", result);
             }
         } catch (Exception e) {
             e.printStackTrace();
