@@ -1,11 +1,7 @@
 package com.gleidesilva.bookslibrary;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import java.io.InputStream;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 
 /**
@@ -22,11 +20,11 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     ArrayList<Book> bookList;
-    private Context context;
+    private Context mContext;
 
     public MyAdapter(Context context, ArrayList<Book> bookList) {
         this.bookList = bookList;
-        this.context = context;
+        this.mContext = context;
     }
 
     @Override
@@ -95,14 +93,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             return this;
         }
 
-        public ViewHolder setTImgBook(String urlBookCover) {
+        public ViewHolder setTImgBook(String imgUrl) {
             if (imgCapa == null) return this;
-            new DownloadImageTask(imgCapa).execute(urlBookCover);
+            //new DownloadImageTask(imgCapa).execute(imgUrl);
             //Picasso.with(context).load(urlBookCover).resize(200,200).centerCrop().into(imgCapa);
+            Glide.with(mContext).load(imgUrl)
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgCapa);
             return this;
         }
 
-        private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        /*private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             ImageView imageView;
 
             public DownloadImageTask(ImageView imageView) {
@@ -116,10 +119,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
 
             protected Bitmap doInBackground(String... urls) {
-                String urldisplay = urls[0];
+                String urlDisplay = urls[0];
                 Bitmap mImage = null;
                 try {
-                    InputStream in = new java.net.URL(urldisplay).openStream();
+                    InputStream in = new java.net.URL(urlDisplay).openStream();
                     mImage = BitmapFactory.decodeStream(in);
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());
@@ -132,7 +135,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 imageView.setImageBitmap(result);
                 progressBar.setVisibility(View.INVISIBLE);
             }
-        }
+
+        }*/
 
     }
 }

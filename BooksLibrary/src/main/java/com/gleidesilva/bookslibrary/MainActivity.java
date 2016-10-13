@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
-    //ProgressBar progressBar;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //hideLoadProgressBar(lista);
+        hideLoadProgressBar(lista);
 
         /*new Thread(new Runnable() {
             @Override
@@ -56,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*private void hideLoadProgressBar(ArrayList<Book> lista) {
+    private void hideLoadProgressBar(ArrayList<Book> lista) {
         if (lista.size() > 0){
             progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
             progressBar.setVisibility(View.GONE);
         }
-    }*/
+    }
 
 
     public ArrayList<Book> iniciaLista(){
