@@ -106,7 +106,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     .glide(mContext)
                     .load(imgUrl)
                     .build(GlideRequest.BITMAP)
-                    .resize(200,200)
+                    .resize(100,100)
                     .circle()
                     .into(imgCapa);
             return this;
