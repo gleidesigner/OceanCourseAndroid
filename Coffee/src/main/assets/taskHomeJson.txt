@@ -1,0 +1,28 @@
+{
+  "pedidos": [
+    {
+      "name": "gleides",
+      "preco": 5,
+      "toppins": [
+        {
+          "whippedcream": true,
+          "chocolate": false
+        }
+      ],
+      "quantidade": 3,
+      "summary": ""
+    },
+    {
+      "name": "thiago",
+      "preco": 5,
+      "toppins": [
+        {
+          "whippedcream": true,
+          "chocolate": false
+        }
+      ],
+      "quantidade": 8,
+      "summary": "-"
+    }
+  ]
+}

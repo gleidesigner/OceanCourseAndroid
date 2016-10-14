@@ -1,5 +1,6 @@
 package com.gleidesilva.coffee;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,10 +14,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -36,6 +49,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
+        try {
+            uploadDataFile();
+            JSONObject jsonObject = new JSONObject(uploadDataFile().toString());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +144,37 @@ public class MainActivity extends AppCompatActivity {
             PriceByCup++;
 
         return quantity * PriceByCup;
+    }
+
+    public StringBuilder uploadDataFile() throws FileNotFoundException {
+        AssetManager assetManager = getResources().getAssets();
+        StringBuilder stringBuilder = new StringBuilder();
+        String stringJson = null;
+        try {
+            System.setIn(assetManager.open("taskHomeJson.txt"));
+            InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            while ((stringJson = bufferedReader.readLine()) != null) {
+                stringBuilder.append(stringJson + "\n");
+            }
+            assetManager.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /**
+         InputStream inputStreamObject = PositionKeeperRequestTest.class.getResourceAsStream(jsonFileName);
+         BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStreamObject, "UTF-8"));
+         StringBuilder responseStrBuilder = new StringBuilder();
+
+         String inputStr;
+         while ((inputStr = streamReader.readLine()) != null)
+         responseStrBuilder.append(inputStr);
+
+         JSONObject jsonObject = new JSONObject(responseStrBuilder.toString());
+         * */
+        return stringBuilder;
+
     }
 
     @Override

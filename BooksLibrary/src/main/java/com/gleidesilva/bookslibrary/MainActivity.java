@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -29,33 +31,72 @@ public class MainActivity extends AppCompatActivity {
         PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
         pulsator.start();*/
 
-        ArrayList<Book> lista = iniciaLista();
 
-        for (Book book:lista) {
-            Log.i(TAG, "titulo: " + book.getTitulo());
-        }
+        String urlDataJson = "http://gitlab.oceanmanaus.com/snippets/1/raw";
+        Ocean.newRequest(urlDataJson, new Request.RequestListener() {
+            @Override
+            public void onRequestOk(String result, JSONObject jsonObject, int code) {
+                Log.d("Request",result);
+                if(code == Request.NENHUM_ERROR){
+                    Log.d(TAG, "Request: " + result);
 
+                    ArrayList<Book> lista = new ArrayList<>();;
+
+                    if (result != null) {
+                        try {
+                            JSONObject jsObject = new JSONObject(result);
+                            JSONArray arrayOcean = jsObject.getJSONArray("ocean");
+
+                            for (int i = 0;  i < arrayOcean.length(); i++){
+                                JSONObject item = arrayOcean.getJSONObject(i);
+                                JSONArray livros =  item.getJSONArray("livros");
+
+                                for (int j = 0; j < livros.length(); j++){
+
+                                    JSONObject livro = livros.getJSONObject(j);
+                                    String titulo = livro.getString("titulo");
+                                    String autor = livro.getString("autor");
+                                    int ano = livro.getInt("ano");
+                                    int paginas = livro.getInt("paginas");
+                                    String capa = livro.getString("capa");
+
+                                    Book mBook = new Book();
+                                    mBook.setTitulo(titulo);
+                                    mBook.setAutor(autor);
+                                    mBook.setAno(ano);
+                                    mBook.setPagina(paginas);
+                                    mBook.setCapa(capa);
+
+                                    lista.add(mBook);
+
+                                    Log.i(TAG, "Titulo: " + titulo);
+                                    Log.i(TAG, "Autor: " + autor);
+                                    Log.i(TAG, "Ano: " + String.format("%s",ano));
+                                    Log.i(TAG, "pagina: " + String.format("%s",paginas));
+                                    Log.i(TAG, "capa: " + j);
+                                }
+                            }
+                            createAdapter(lista);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+            }
+        }).get().send();
+
+    }
+
+    private void createAdapter(ArrayList<Book> lista) {
         MyAdapter adapter = new MyAdapter(this, lista);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         hideLoadProgressBar(lista);
-
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpRequest.GET("http://gitlab.oceanmanaus.com/snippets/1/raw");
-            }
-        }).start();*/
-
-        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", new Request.RequestListener() {
-            @Override
-            public void onRequestOk(String result, JSONObject jsonObject, int i) {
-                Log.d("Request",result);
-            }
-        }).get().send();
-
     }
 
     private void hideLoadProgressBar(ArrayList<Book> lista) {
@@ -66,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public ArrayList<Book> iniciaLista(){
+    /*public ArrayList<Book> iniciaLista(){
         ArrayList<Book> books = new ArrayList<>();
         //String urlBookCover = "http://pngimg.com/upload/book_PNG2118.png";
 
@@ -117,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         books.add(mBook5);
 
         return books;
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
