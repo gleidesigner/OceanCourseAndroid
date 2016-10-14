@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.glide.GlideRequest;
 
 import java.util.ArrayList;
 
@@ -97,10 +97,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             if (imgCapa == null) return this;
             //new DownloadImageTask(imgCapa).execute(imgUrl);
             //Picasso.with(context).load(urlBookCover).resize(200,200).centerCrop().into(imgCapa);
-            Glide.with(mContext).load(imgUrl)
+            /*Glide.with(mContext).load(imgUrl)
                     .thumbnail(0.5f)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgCapa);*/
+            Ocean
+                    .glide(mContext)
+                    .load(imgUrl)
+                    .build(GlideRequest.BITMAP)
+                    .resize(200,200)
+                    .circle()
                     .into(imgCapa);
             return this;
         }

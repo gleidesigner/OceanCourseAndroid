@@ -6,7 +6,6 @@
     android:orientation="vertical"
     tools:context="com.gleidesilva.bookslibrary.MainActivity">
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recicler_view_book"
         android:layout_width="match_parent"

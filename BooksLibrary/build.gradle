@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'AndroidDebugKey'
             keyPassword 'android'
-            storeFile file('/home/gleides/.android/debug.keystore')
+            storeFile file('/home/gleidesilva/.android/debug.keystore')
             storePassword 'android'
         }
     }
@@ -26,6 +26,10 @@ android {
         }
         debug {
             signingConfig signingConfigs.config
+            debuggable true
+            jniDebuggable false
+            renderscriptDebuggable false
+            minifyEnabled false
         }
     }
 }

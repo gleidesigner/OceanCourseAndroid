@@ -1,5 +1,6 @@
 package com.gleidesilva.bookslibrary;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,11 +18,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Request.RequestListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,63 +36,82 @@ public class MainActivity extends AppCompatActivity {
         PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
         pulsator.start();*/
 
+        progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
 
-        String urlDataJson = "http://gitlab.oceanmanaus.com/snippets/1/raw";
-        Ocean.newRequest(urlDataJson, new Request.RequestListener() {
-            @Override
-            public void onRequestOk(String result, JSONObject jsonObject, int code) {
-                Log.d("Request",result);
-                if(code == Request.NENHUM_ERROR){
-                    Log.d(TAG, "Request: " + result);
+    }
 
-                    ArrayList<Book> lista = new ArrayList<>();;
+    public StringBuilder getDataFile() {
+        try {
+            AssetManager assetManager = getResources().getAssets();
+            System.setIn(assetManager.open("jsonLibraryBook.txt"));
+            InputStreamReader inputStreamReader = new InputStreamReader(System.in, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder responseStrBuilder = new StringBuilder();
 
-                    if (result != null) {
-                        try {
-                            JSONObject jsObject = new JSONObject(result);
-                            JSONArray arrayOcean = jsObject.getJSONArray("ocean");
+            String inputStr;
+            while ((inputStr = bufferedReader.readLine()) != null)
+                responseStrBuilder.append(inputStr);
 
-                            for (int i = 0;  i < arrayOcean.length(); i++){
-                                JSONObject item = arrayOcean.getJSONObject(i);
-                                JSONArray livros =  item.getJSONArray("livros");
+            return responseStrBuilder;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-                                for (int j = 0; j < livros.length(); j++){
+    @Override
+    public void onRequestOk(String result, JSONObject jsonObject, int code) {
+        if (code == Request.NENHUM_ERROR) {
+            getListBook(result);
+        }
+    }
 
-                                    JSONObject livro = livros.getJSONObject(j);
-                                    String titulo = livro.getString("titulo");
-                                    String autor = livro.getString("autor");
-                                    int ano = livro.getInt("ano");
-                                    int paginas = livro.getInt("paginas");
-                                    String capa = livro.getString("capa");
+    public void getListBook(String result) {
+        Log.d(TAG, "Request: " + result);
+        ArrayList<Book> lista = new ArrayList<>();
 
-                                    Book mBook = new Book();
-                                    mBook.setTitulo(titulo);
-                                    mBook.setAutor(autor);
-                                    mBook.setAno(ano);
-                                    mBook.setPagina(paginas);
-                                    mBook.setCapa(capa);
+        if (result != null) {
+            try {
+                JSONObject jsObject = new JSONObject(result);
+                JSONArray arrayOcean = jsObject.getJSONArray("ocean");
 
-                                    lista.add(mBook);
+                for (int i = 0; i < arrayOcean.length(); i++) {
+                    JSONObject item = arrayOcean.getJSONObject(i);
+                    JSONArray livros = item.getJSONArray("livros");
 
-                                    Log.i(TAG, "Titulo: " + titulo);
-                                    Log.i(TAG, "Autor: " + autor);
-                                    Log.i(TAG, "Ano: " + String.format("%s",ano));
-                                    Log.i(TAG, "pagina: " + String.format("%s",paginas));
-                                    Log.i(TAG, "capa: " + j);
-                                }
-                            }
-                            createAdapter(lista);
+                    for (int j = 0; j < livros.length(); j++) {
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        JSONObject livro = livros.getJSONObject(j);
+                        String titulo = livro.getString("titulo");
+                        String autor = livro.getString("autor");
+                        int ano = livro.getInt("ano");
+                        int paginas = livro.getInt("paginas");
+                        String capa = livro.getString("capa");
 
+                        Book mBook = new Book();
+                        mBook.setTitulo(titulo);
+                        mBook.setAutor(autor);
+                        mBook.setAno(ano);
+                        mBook.setPagina(paginas);
+                        mBook.setCapa(capa);
+
+                        lista.add(mBook);
+
+                        Log.i(TAG, "Titulo: " + titulo);
+                        Log.i(TAG, "Autor: " + autor);
+                        Log.i(TAG, "Ano: " + String.format("%s", ano));
+                        Log.i(TAG, "pagina: " + String.format("%s", paginas));
+                        Log.i(TAG, "capa: " + j);
                     }
-
                 }
-            }
-        }).get().send();
+                createAdapter(lista);
 
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     private void createAdapter(ArrayList<Book> lista) {
@@ -100,65 +124,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hideLoadProgressBar(ArrayList<Book> lista) {
-        if (lista.size() > 0){
-            progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        if (lista.size() > 0) {
             progressBar.setVisibility(View.GONE);
         }
     }
-
-
-    /*public ArrayList<Book> iniciaLista(){
-        ArrayList<Book> books = new ArrayList<>();
-        //String urlBookCover = "http://pngimg.com/upload/book_PNG2118.png";
-
-        Book mBook1 = new Book();
-        mBook1.setTitulo("MOODLE 2 para Autores e Tutores - 3ª Edição");
-        mBook1.setAutor("Robson Santos da Silva");
-        mBook1.setAno(2013);
-        mBook1.setPagina(168);
-        //mBook1.setCapa("http://172.25.1.17/oceanbook/moodle2.jpg");
-        mBook1.setCapa("http://pngimg.com/upload/book_PNG2118.png");
-        //mBook1.setCapa(urlBookCover);
-        books.add(mBook1);
-
-        Book mBook2 = new Book();
-        mBook2.setTitulo("NoSQL Essencial");
-        mBook2.setAutor("Pramod J. Sadalage / Martin Fowler");
-        mBook2.setAno(2013);
-        mBook2.setPagina(216);
-        //mBook2.setCapa(urlBookCover);
-        mBook2.setCapa("http://pngimg.com/upload/img1415917828.jpg");
-        books.add(mBook2);
-
-        Book mBook3 = new Book();
-        mBook3.setTitulo("Fundamentos de Bancos de Dados com C#");
-        mBook3.setAutor("Michael Schmalz");
-        mBook3.setAno(2012);
-        mBook3.setPagina(120);
-        //mBook3.setCapa(urlBookCover);
-        mBook3.setCapa("http://pngimg.com/upload/img1428165014.jpg");
-        books.add(mBook3);
-
-        Book mBook4 = new Book();
-        mBook4.setTitulo("Jovem e Bem-Sucedido");
-        mBook4.setAutor("Juliano Niederauer");
-        mBook4.setAno(2013);
-        mBook4.setPagina(192);
-        //mBook4.setCapa(urlBookCover);
-        mBook4.setCapa("http://pngimg.com/upload/book_PNG2107.png");
-        books.add(mBook4);
-
-        Book mBook5 = new Book();
-        mBook5.setTitulo("Lidando com a Incertezao");
-        mBook5.setAutor("Jonathan Fields");
-        mBook5.setAno(2013);
-        mBook5.setPagina(208);
-        //mBook5.setCapa(urlBookCover);
-        mBook5.setCapa("http://pngimg.com/upload/book_PNG2105.png");
-        books.add(mBook5);
-
-        return books;
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,10 +144,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.source_data_file) {
+            setTitle(getResources().getString(R.string.str_source_data_file));
+            getListBook(getDataFile().toString());
+            return true;
+        }
+        if (id == R.id.source_data_url) {
+            setTitle(getResources().getString(R.string.str_source_data_url));
+            Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", this).get().send();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -1,0 +1,145 @@
+{
+    "ocean": [
+        {
+            "categoria": "Segurança",
+            "livros": [
+                {
+                    "titulo": "Hacking com Kali Linux",
+                    "autor": "James Broad / Andrew Bindner",
+                    "ano": 2014,
+                    "paginas": 288,
+                    "capa": "http://172.25.1.17/oceanbook/HackingLinux.jpg"
+                },
+                {
+                    "titulo": "Introdução ao Hacking e aos Testes de Invasão",
+                    "autor": "Patrick Engebretson",
+                    "ano": 2014,
+                    "paginas": 304,
+                    "capa": "http://172.25.1.17/oceanbook/IntroduçãoTestesdeInvasão.jpg"
+                },
+                {
+                    "titulo": "Introdução ao Web Hacking",
+                    "autor": "Josh Pauli",
+                    "ano": 2014,
+                    "paginas": 224,
+                    "capa": "http://172.25.1.17/oceanbook/IntroduçãoWebHacking.jpg"
+                },
+                {
+                    "titulo": "Wireshark Guia Prático",
+                    "autor": "Robert Shimonski",
+                    "ano": 2013,
+                    "paginas": 168,
+                    "capa": "http://172.25.1.17/oceanbook/WiresharkGuiaPrático.jpg"
+                },
+                {
+                    "titulo": "Introdução à Análise Forense em Redes de Computadores",
+                    "autor": "Ricardo Kléber M. Galvão",
+                    "ano": 2013,
+                    "paginas": 152,
+                    "capa": "http://172.25.1.17/oceanbook/IntroduçãoAnáliseForenseRedes.jpg"
+                },
+                {
+                    "titulo": "Gerenciando Privilégios em Tecnologia da Informação",
+                    "autor": "John Mutch / Brian Anderson",
+                    "ano": 2012,
+                    "paginas": 224,
+                    "capa": "http://172.25.1.17/oceanbook/GerenciandoPrivilégiosemTecnologiadaInfo.jpg"
+                },
+                {
+                    "titulo": "Segurança de Aplicativos Android",
+                    "autor": "Jeff Six",
+                    "ano": 2012,
+                    "paginas": 144,
+                    "capa": "http://172.25.1.17/oceanbook/SegurançadeAplicativosAndroid.jpg"
+                },
+                {
+                    "titulo": "Segurança em Redes sem Fio - 3ª Edição",
+                    "autor": "Nelson Murilo de O. Rufino ",
+                    "ano": 2011,
+                    "paginas": 240,
+                    "capa": "http://172.25.1.17/oceanbook/SegurançaRedessemFio.jpg"
+                },
+                {
+                    "titulo": "Desvendando a Computação Forense",
+                    "autor": "Pedro Monteiro da Silva Eleutério / Marcio Pereira Machado",
+                    "ano": 2011,
+                    "paginas": 200,
+                    "capa": "http://172.25.1.17/oceanbook/DesvendandoaComputaçãoForense.jpg"
+                }
+            ]
+        },
+        {
+            "categoria": "Softwares",
+            "livros": [
+                {
+                    "titulo": "Relatórios Avançados com Excel 2013",
+                    "autor": "Júlio César Scheiffer Saleh",
+                    "ano": 2013,
+                    "paginas": 176,
+                    "capa": "http://172.25.1.17/oceanbook/RelatóriosAvançadoscomExcel2013.jpg"
+                },
+                {
+                    "titulo": "Scrum Guia Prático para Projetos Ágeis",
+                    "autor": "Cesar Brod",
+                    "ano": 2013,
+                    "paginas": 192,
+                    "capa": "http://172.25.1.17/oceanbook/ScrumGuiaPráticoProjetosÁgeis.jpg"
+                },
+                {
+                    "titulo": "Lançamento de Software",
+                    "autor": "Chris Vander Mey",
+                    "ano": 2013,
+                    "paginas": 264,
+                    "capa": "http://172.25.1.17/oceanbook/LançamentodeSoftware.jpg"
+                },
+                {
+                    "titulo": "As Leis Fundamentais do Projeto de Software",
+                    "autor": "Max Kanat-Alexander",
+                    "ano": 2012,
+                    "paginas": 112,
+                    "capa": "http://172.25.1.17/oceanbook/AsLeisFundamentaisProjetoSoftware.jpg"
+                },
+                {
+                    "titulo": "Scrum em Ação",
+                    "autor": "Andrew Pham / Phuong-Van Pham",
+                    "ano": 2011,
+                    "paginas": 288,
+                    "capa": "http://172.25.1.17/oceanbook/ScrumAção.jpg"
+                }
+            ]
+        },
+        {
+            "categoria": "Sistemas Operacionais",
+            "livros": [
+                {
+                    "titulo": "Descobrindo o Linux - 3ª Edição",
+                    "autor": "João Eriberto Mota Filho",
+                    "ano": 2012,
+                    "paginas": 928,
+                    "capa": "http://172.25.1.17/oceanbook/DescobrindoLinux.jpg"
+                },
+                {
+                    "titulo": "UML 2 – Guia Prático - 2ª Edição",
+                    "autor": "Gilleanes T. A. Guedes",
+                    "ano": 2014,
+                    "paginas": 192,
+                    "capa": "http://172.25.1.17/oceanbook/UML2.jpg"
+                },
+                {
+                    "titulo": "Aprenda UML por Meio de Estudos de Caso",
+                    "autor": "Wilson Moraes Góes",
+                    "ano": 2014,
+                    "paginas": 288,
+                    "capa": "http://172.25.1.17/oceanbook/AprendaUMLporMeiodeEstudosdeCaso.jpg"
+                },
+                {
+                    "titulo": "UML 2 - Uma Abordagem Prática - 2ª Edição",
+                    "autor": "Gilleanes T. A. Guedes ",
+                    "ano": 2011,
+                    "paginas": 488,
+                    "capa": "http://172.25.1.17/oceanbook/UML2UmaAbordagemPrática.jpg"
+                }
+            ]
+        }
+    ]
+}
