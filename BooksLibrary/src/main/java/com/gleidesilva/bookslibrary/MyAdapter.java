@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
@@ -51,7 +52,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return bookList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtTitle;
         private TextView txtAutor;
         private TextView txtPagina;
@@ -67,6 +68,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtAno = (TextView) itemView.findViewById(R.id.ano);
             imgCapa = (ImageView) itemView.findViewById(R.id.imageBook);
             progressBar = (ProgressBar) itemView.findViewById(R.id.my_progress_bar);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(mContext, "Clicou no livro: "+ txtTitle.getText().toString(), Toast.LENGTH_SHORT).show();
         }
 
         public ViewHolder setTxtTitle(String title) {
