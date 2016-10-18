@@ -1,10 +1,12 @@
 package com.gleidesilva.bookslibrary;
 
+import java.io.Serializable;
+
 /**
  * Created by gleides on 10/10/16.
  */
 
-public class Book {
+public class Book implements Serializable{
     private String capa;
     private String titulo;
     private String autor;

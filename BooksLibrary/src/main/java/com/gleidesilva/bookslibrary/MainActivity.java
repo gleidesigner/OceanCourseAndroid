@@ -1,5 +1,6 @@
 package com.gleidesilva.bookslibrary;
 
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
 
@@ -23,9 +26,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Request.RequestListener {
+public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.AdapterListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     ProgressBar progressBar;
+    private ArrayList<Book> mListBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +67,22 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
     @Override
     public void onRequestOk(String result, JSONObject jsonObject, int code) {
         if (code == Request.NENHUM_ERROR) {
-            getListBook(result);
+            //getListBook(result);
+            createAdapter(stringToGson(result));
         }
+    }
+
+    private ArrayList<Book> stringToGson(String result) {
+        ArrayList<Book> livros = new ArrayList<>();
+        Gson gson = new Gson();
+        BookStore bookStore = gson.fromJson(result, BookStore.class);
+        ArrayList<Item> itens = bookStore.getOcean();
+
+        for (Item item : itens) {
+            livros.addAll(item.getLivros());
+        }
+
+        return livros;
     }
 
     public void getListBook(String result) {
@@ -115,12 +133,27 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
     }
 
     private void createAdapter(ArrayList<Book> lista) {
+        mListBook = lista;
         MyAdapter adapter = new MyAdapter(this, lista);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        adapter.setAdapterListener(this);
+
         hideLoadProgressBar(lista);
+    }
+
+    @Override
+    public void onItemClick(View view, int pos) {
+        Book book = mListBook.get(pos);
+        String titulo = book.getTitulo().toString();
+        Toast.makeText(getApplicationContext(), "Clicou no livro: "+ titulo, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, BookDetailActivity.class);
+        intent.putExtra("book", book);
+        startActivity(intent);
+
     }
 
     private void hideLoadProgressBar(ArrayList<Book> lista) {
@@ -157,5 +190,4 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
 
         return super.onOptionsItemSelected(item);
     }
-
 }

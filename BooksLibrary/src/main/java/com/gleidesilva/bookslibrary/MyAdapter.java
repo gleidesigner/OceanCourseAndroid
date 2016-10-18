@@ -22,6 +22,15 @@ import java.util.ArrayList;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     ArrayList<Book> bookList;
     private Context mContext;
+    private AdapterListener mAdapterListener;
+
+    public AdapterListener getAdapterListener() {
+        return mAdapterListener;
+    }
+
+    public void setAdapterListener(AdapterListener mAdapterListener) {
+        this.mAdapterListener = mAdapterListener;
+    }
 
     public MyAdapter(Context context, ArrayList<Book> bookList) {
         this.bookList = bookList;
@@ -52,6 +61,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return bookList.size();
     }
 
+
+    interface AdapterListener{
+        void onItemClick (View view, int pos);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView txtTitle;
         private TextView txtAutor;
@@ -74,7 +88,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(mContext, "Clicou no livro: "+ txtTitle.getText().toString(), Toast.LENGTH_SHORT).show();
+            if (mAdapterListener != null){
+                mAdapterListener.onItemClick(v, getPosition());
+            }
         }
 
         public ViewHolder setTxtTitle(String title) {
