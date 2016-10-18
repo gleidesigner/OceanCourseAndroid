@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.oceanbrasil.libocean.Ocean;
@@ -27,9 +26,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.AdapterListener {
+
     private static final String TAG = MainActivity.class.getSimpleName();
-    ProgressBar progressBar;
-    private ArrayList<Book> mListBook;
+    //ProgressBar progressBar;
+    private ArrayList<Book> mBookList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,11 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
         PulsatorLayout pulsator = (PulsatorLayout) findViewById(R.id.pulsator);
         pulsator.start();*/
 
-        progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
-        progressBar.setVisibility(View.INVISIBLE);
+        /*progressBar = (ProgressBar) findViewById(R.id.my_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);*/
+
+        setTitle(getResources().getString(R.string.str_source_data_url));
+        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", this).get().send();
 
     }
 
@@ -68,26 +71,52 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
     public void onRequestOk(String result, JSONObject jsonObject, int code) {
         if (code == Request.NENHUM_ERROR) {
             //getListBook(result);
-            createAdapter(stringToGson(result));
+            stringToGson(result);
+            createAdapter();
         }
     }
 
-    private ArrayList<Book> stringToGson(String result) {
-        ArrayList<Book> livros = new ArrayList<>();
+    private void stringToGson(String result) {
+        mBookList = new ArrayList<>();
         Gson gson = new Gson();
         BookStore bookStore = gson.fromJson(result, BookStore.class);
         ArrayList<Item> itens = bookStore.getOcean();
 
         for (Item item : itens) {
-            livros.addAll(item.getLivros());
+            mBookList.addAll(item.getLivros());
         }
-
-        return livros;
     }
 
+    private void createAdapter() {
+        MyAdapter adapter = new MyAdapter(this, mBookList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter.setAdapterListener(this);
+
+        //hideLoadProgressBar(lista);
+    }
+
+    @Override
+    public void onItemClick(View view, int pos) {
+        Book book = mBookList.get(pos);
+        Intent intent = new Intent(MainActivity.this, BookDetailActivity.class);
+        intent.putExtra("book", book);
+        startActivity(intent);
+
+    }
+
+/*    private void hideLoadProgressBar(ArrayList<Book> lista) {
+        if (lista.size() > 0) {
+            progressBar.setVisibility(View.GONE);
+        }
+    }*/
+
+    //metodo tradicional de pegar as informações do JSON
     public void getListBook(String result) {
         Log.d(TAG, "Request: " + result);
-        ArrayList<Book> lista = new ArrayList<>();
+        //ArrayList<Book> lista = new ArrayList<>();
 
         if (result != null) {
             try {
@@ -114,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
                         mBook.setPagina(paginas);
                         mBook.setCapa(capa);
 
-                        lista.add(mBook);
+                        mBookList.add(mBook);
 
                         Log.i(TAG, "Titulo: " + titulo);
                         Log.i(TAG, "Autor: " + autor);
@@ -123,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
                         Log.i(TAG, "capa: " + j);
                     }
                 }
-                createAdapter(lista);
+                createAdapter();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -132,40 +161,10 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
         }
     }
 
-    private void createAdapter(ArrayList<Book> lista) {
-        mListBook = lista;
-        MyAdapter adapter = new MyAdapter(this, lista);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter.setAdapterListener(this);
-
-        hideLoadProgressBar(lista);
-    }
-
-    @Override
-    public void onItemClick(View view, int pos) {
-        Book book = mListBook.get(pos);
-        String titulo = book.getTitulo().toString();
-        Toast.makeText(getApplicationContext(), "Clicou no livro: "+ titulo, Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(this, BookDetailActivity.class);
-        intent.putExtra("book", book);
-        startActivity(intent);
-
-    }
-
-    private void hideLoadProgressBar(ArrayList<Book> lista) {
-        if (lista.size() > 0) {
-            progressBar.setVisibility(View.GONE);
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        //getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

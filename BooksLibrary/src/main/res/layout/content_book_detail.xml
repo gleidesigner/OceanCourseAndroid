@@ -13,4 +13,6 @@
     tools:context="com.gleidesilva.bookslibrary.BookDetailActivity"
     tools:showIn="@layout/activity_book_detail">
 
+    <include layout="@layout/item_detail_book"/>
+
 </RelativeLayout>

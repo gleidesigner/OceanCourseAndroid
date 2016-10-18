@@ -1,11 +1,9 @@
 package com.gleidesilva.bookslibrary;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,36 +11,43 @@ import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
 
 public class BookDetailActivity extends AppCompatActivity {
-    TextView txtTitle;
-    TextView txtAutor;
-    TextView txtPagina;
-    TextView txtAno;
-    ImageView imgCapa;
+    TextView title;
+    TextView autor;
+    TextView pagina;
+    TextView ano;
+    ImageView capa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_detail_book);
-        initialView();
+        setContentView(R.layout.activity_book_detail);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         getLivro();
     }
 
     public void initialView() {
-        txtTitle = (TextView) findViewById(R.id.detalhesTitulo);
-        txtAutor = (TextView) findViewById(R.id.detalhesAutor);
-        txtPagina = (TextView) findViewById(R.id.detalhesPaginas);
-        txtAno = (TextView) findViewById(R.id.detalhesAno);
-        imgCapa = (ImageView) findViewById(R.id.detalhesImageView);
+        title = (TextView) findViewById(R.id.detalhesTitulo);
+        autor = (TextView) findViewById(R.id.detalhesAutor);
+        pagina = (TextView) findViewById(R.id.detalhesPaginas);
+        ano = (TextView) findViewById(R.id.detalhesAno);
+        capa = (ImageView) findViewById(R.id.detalhesImageView);
 
     }
 
     public void getLivro() {
         //String titulo = getIntent().getStringExtra("titulo");
         Book book = (Book) getIntent().getSerializableExtra("book");
+        initialView();
 
-        txtTitle.setText(book.getTitulo());
-        txtAutor.setText(book.getAutor());
-        txtPagina.setText(book.getPagina());
-        txtAno.setText(book.getAno());
+        title.setText(book.getTitulo());
+        autor.setText(book.getAutor());
+        pagina.setText(String.valueOf(book.getPagina()));
+        ano.setText(String.valueOf(book.getAno()));
 
         if (book.getCapa() != null){
             Ocean
@@ -50,8 +55,7 @@ public class BookDetailActivity extends AppCompatActivity {
                     .load(book.getCapa())
                     .build(GlideRequest.BITMAP)
                     .resize(100,100)
-                    .circle()
-                    .into(imgCapa);
+                    .into(capa);
         }
     }
 }

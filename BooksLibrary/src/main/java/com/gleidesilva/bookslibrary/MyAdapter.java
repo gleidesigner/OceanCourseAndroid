@@ -61,8 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return bookList.size();
     }
 
-
-    interface AdapterListener{
+    public interface AdapterListener{
         void onItemClick (View view, int pos);
     }
 
@@ -72,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private TextView txtPagina;
         private TextView txtAno;
         private ImageView imgCapa;
-        ProgressBar progressBar;
+        //ProgressBar progressBar;
         public ViewHolder(View itemView) {
             super(itemView);
             //Recupera as referencias do layout
@@ -81,15 +80,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             txtPagina = (TextView) itemView.findViewById(R.id.pagina);
             txtAno = (TextView) itemView.findViewById(R.id.ano);
             imgCapa = (ImageView) itemView.findViewById(R.id.imageBook);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.my_progress_bar);
+            //progressBar = (ProgressBar) itemView.findViewById(R.id.my_progress_bar);
 
+            //Registra o Listener no item view
             itemView.setOnClickListener(this);
         }
 
         @Override
-        public void onClick(View v) {
+        public void onClick(View view) {
+            int pos = getPosition();
             if (mAdapterListener != null){
-                mAdapterListener.onItemClick(v, getPosition());
+                mAdapterListener.onItemClick(view, pos);
             }
         }
 
@@ -119,13 +120,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ViewHolder setTImgBook(String imgUrl) {
             if (imgCapa == null) return this;
-            //new DownloadImageTask(imgCapa).execute(imgUrl);
-            //Picasso.with(context).load(urlBookCover).resize(200,200).centerCrop().into(imgCapa);
+            //new DownloadImageTask(capa).execute(imgUrl);
+            //Picasso.with(context).load(urlBookCover).resize(200,200).centerCrop().into(capa);
             /*Glide.with(mContext).load(imgUrl)
                     .thumbnail(0.5f)
                     .crossFade()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(imgCapa);*/
+                    .into(capa);*/
             Ocean
                     .glide(mContext)
                     .load(imgUrl)
