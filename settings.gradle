@@ -1,1 +1,1 @@
-include ':Coffee', ':BooksLibrary', ':LearnDesignPatterns'
+include ':Coffee', ':BooksLibrary', ':LearnDesignPatterns', ':MyAppFirebase'
