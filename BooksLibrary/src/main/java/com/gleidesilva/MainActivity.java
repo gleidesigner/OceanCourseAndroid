@@ -1,4 +1,4 @@
-package com.gleidesilva.bookslibrary;
+package com.gleidesilva;
 
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -10,8 +10,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
+import com.gleidesilva.bookslibrary.Book;
+import com.gleidesilva.bookslibrary.BookDetailActivity;
+import com.gleidesilva.bookslibrary.BookStore;
+import com.gleidesilva.bookslibrary.Item;
+import com.gleidesilva.adapter.BookAdapter;
+import com.gleidesilva.bookslibrary.R;
 import com.google.gson.Gson;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
@@ -25,7 +30,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.AdapterListener {
+public class MainActivity extends AppCompatActivity implements Request.RequestListener, BookAdapter.AdapterListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //ProgressBar progressBar;
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
     }
 
     private void createAdapter() {
-        MyAdapter adapter = new MyAdapter(this, mBookList);
+        BookAdapter adapter = new BookAdapter(this, mBookList);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

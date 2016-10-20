@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.gleidesilva.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,11 @@
         <activity
             android:name=".BookDetailActivity"
             android:label="@string/title_activity_book_detail"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.gleidesilva.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.gleidesilva.bookslibrary.MainActivity" />
+                android:value="com.gleidesilva.bookslibrary.com.gleidesilva.MainActivity" />
         </activity>
     </application>
 

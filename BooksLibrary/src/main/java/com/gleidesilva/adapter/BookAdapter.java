@@ -1,4 +1,4 @@
-package com.gleidesilva.bookslibrary;
+package com.gleidesilva.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.gleidesilva.bookslibrary.Book;
+import com.gleidesilva.bookslibrary.R;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by gleides on 10/10/16.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     ArrayList<Book> bookList;
     private Context mContext;
     private AdapterListener mAdapterListener;
@@ -32,19 +32,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.mAdapterListener = mAdapterListener;
     }
 
-    public MyAdapter(Context context, ArrayList<Book> bookList) {
+    public BookAdapter(Context context, ArrayList<Book> bookList) {
         this.bookList = bookList;
         this.mContext = context;
     }
 
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_book, null);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(BookAdapter.ViewHolder holder, int position) {
         Book itemBookList = bookList.get(position);
 
         //Seta os valores do livro para o layout dentro do holder
