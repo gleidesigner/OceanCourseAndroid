@@ -1,0 +1,12 @@
+buildTypes.each {
+            it.buildConfigField 'String', 'THE_MOVIE_DB_KEY', "\"your key""
+        }
+
+Uri.Builder builder = new Uri.Builder();
+                builder.scheme("http");
+                builder.authority(TMDB_AUTHORITY);
+
+                builder.appendPath(TMDB_API_VERSION).appendPath(TMDB_MOVIE_DIR).appendPath(queryMode);
+                builder.appendQueryParameter(TMDB_API_KEY, BuildConfig.THE_MOVIE_DB_KEY);
+                builder.appendQueryParameter(TMDB_LANGUAGE, "en-us");
+                builder.appendQueryParameter(TMDB_PAGE, currentPage);
