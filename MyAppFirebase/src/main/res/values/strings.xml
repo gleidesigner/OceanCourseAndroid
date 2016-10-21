@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MyAppFirebase</string>
+    <string name="salvar">Salvar</string>
+
+    <string-array name="book_array">
+        <item>Programacao</item>
+        <item>Calculo</item>
+        <item>Fisica</item>
+        <item>Matematica</item>
+        <item>Android Google</item>
+    </string-array>
 </resources>
