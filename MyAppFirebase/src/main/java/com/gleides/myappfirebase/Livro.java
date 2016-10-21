@@ -5,18 +5,30 @@ package com.gleides.myappfirebase;
  */
 
 public class Livro {
-    private String capa;
+    private String categoria;
     private String titulo;
     private String autor;
-    private int pagina;
-    private int ano;
+    private Integer pagina;
+    private Integer ano;
+    //private String capa;
 
-    public String getCapa() {
-        return capa;
+    public Livro() {
     }
 
-    public void setCapa(String capa) {
-        this.capa = capa;
+    public Livro(String categoria, String titulo, String autor, Integer pagina, Integer ano) {
+        this.categoria = categoria;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.pagina = pagina;
+        this.ano = ano;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getTitulo() {
@@ -35,19 +47,19 @@ public class Livro {
         this.autor = autor;
     }
 
-    public int getPagina() {
+    public Integer getPagina() {
         return pagina;
     }
 
-    public void setPagina(int pagina) {
+    public void setPagina(Integer pagina) {
         this.pagina = pagina;
     }
 
-    public int getAno() {
+    public Integer getAno() {
         return ano;
     }
 
-    public void setAno(int ano) {
+    public void setAno(Integer ano) {
         this.ano = ano;
     }
 }
