@@ -78,7 +78,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="number"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionSend"
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:hint="Ano" />

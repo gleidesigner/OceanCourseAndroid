@@ -4,8 +4,11 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -37,11 +40,25 @@ public class MainActivity extends AppCompatActivity {
 
         // Create an ArrayAdapter using the string array and a default categoria layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.book_array,
-                android.R.layout.simple_spinner_item);
+                android.R.layout.simple_list_item_2);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.activity_list_item);
         // Apply the adapter to the categoria
         spCategoria.setAdapter(adapter);
+
+        //Listener ao clicar na tecla ENTER
+        edAno.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    Log.i("onKey", "Enter or Button OK pressed");
+                    //Solicitação de serviço do Helper
+                    salvaBookFirebase();
+                }
+                return false;
+            }
+        });
 
 
     }
