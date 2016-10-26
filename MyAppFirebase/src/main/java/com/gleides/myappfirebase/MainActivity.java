@@ -1,9 +1,19 @@
 package com.gleides.myappfirebase;
 
+import android.*;
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -11,17 +21,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.glide.GlideRequest;
+import com.oceanbrasil.libocean.control.glide.ImageDelegate;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
+import java.util.Date;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ImageDelegate.BytesListener {
+
+    private static final int REQUEST_INTENT_CAMERA = 10;
+    private static final String[] PERMISSIONS_READ_WRITE = {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private static final int REQUEST_PERMISSION = 11;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    ;
     DatabaseReference mDbLivro = firebaseDatabase.getReference("livros");
 
     private EditText edtTitle;
@@ -30,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText edAno;
     private Livro livro;
     private Spinner spCategoria;
-    //private ImageView imgCapa;
+    private File pathImage;
+    private ImageView imgCapa;
 
+    private byte[] byteImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +64,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Create an ArrayAdapter using the string array and a default categoria layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.book_array,
-                android.R.layout.simple_list_item_2);
+                android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.activity_list_item);
-        // Apply the adapter to the categoria
+        // Apply the com.gleides.myappfirebase.adapter to the categoria
         spCategoria.setAdapter(adapter);
 
-        //Listener ao clicar na tecla ENTER
+        /*//Listener ao clicar na tecla ENTER
         edAno.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -58,9 +82,92 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
+
+        imgCapa.setOnClickListener(this);
 
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        abrirCamera();
+    }
+    /**
+     * Abrir a camera verficando se existe Permissao
+     */
+    private void abrirCamera(){
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            verificaChamarPermissao();
+        } else {
+            // tenho permissao, chama a intent de camera
+            intentAbrirCamera();
+        }
+    }
+
+    private void verificaChamarPermissao() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // exibir o motivo de esta precisando da permissao
+            Toast.makeText(getApplicationContext(), "Voce precisa dá permissão", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_READ_WRITE, REQUEST_PERMISSION);
+        } else {
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_READ_WRITE, REQUEST_PERMISSION);
+        }
+    }
+
+    private void intentAbrirCamera(){
+        String nomeFoto = DateFormat.format("yyyy-mm-dd_hhmmss", new Date()).toString()+"firebase.jpg";
+        pathImage = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),nomeFoto);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(pathImage));
+        startActivityForResult(intent, REQUEST_INTENT_CAMERA);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_PERMISSION){
+            if (PermissionUtil.verifyPermissions(grantResults)) {
+                // tem
+                Log.d("Ale","tem permissao");
+                intentAbrirCamera();
+            } else {
+                // nao tem a permissao
+                Log.d("Ale","nao tem permissao");
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_INTENT_CAMERA && resultCode == RESULT_OK){
+            if (pathImage != null && pathImage.exists()){
+                Ocean.glide(this)
+                        .load(Uri.fromFile(pathImage))
+                        .build(GlideRequest.BYTES)
+                        .addDelegateImageBytes(this)
+                        .toBytes(300, 300);
+            }else{
+                Log.e("Ale","FILE null");
+            }
+        }else{
+            Log.d("Ale","nao usou a camera");
+        }
+    }
+
+    @Override
+    public void createdImageBytes(byte[] bytes) {
+        byteImage = bytes;
+        Bitmap bitmap = Ocean.byteToBitmap(bytes);
+        imgCapa.setImageBitmap(bitmap);
     }
 
     public void initialViews() {
@@ -71,13 +178,15 @@ public class MainActivity extends AppCompatActivity {
         edAutor = (EditText) findViewById(R.id.detalhesAutor);
         edPagina = (EditText) findViewById(R.id.detalhesPagina);
         edAno = (EditText) findViewById(R.id.detalhesAno);
-        //imgCapa = (ImageView) findViewById(R.id.detalhesCapa);
+        imgCapa = (ImageView) findViewById(R.id.detalhesCapa);
     }
 
-
     public void salvaBookFirebase() {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://myappocean.appspot.com").child("livrosImagens").child(pathImage.getName());
+        storageReference.putBytes(byteImage);
 
-        final ProgressDialog progressDialog = new ProgressDialog(this);
+        /*final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Enviando dandos...");
         progressDialog.show();
 
@@ -100,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     progressDialog.setMessage("Error de envio de dandos!");
                 }
             }
-        });
+        });*/
     }
 
     public void clearEditText() {
@@ -109,26 +218,6 @@ public class MainActivity extends AppCompatActivity {
         edPagina.setText("");
         edAno.setText("");
     }
-
-/*    public void LerDadosFirebase(View view) {
-
-        // Read from the database
-        mDbLivro.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Livro livro = dataSnapshot.getValue(Livro.class);
-                Log.d("Livros", "Value is: " + livro.getAutor());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Livros", "Failed to read value.", error.toException());
-            }
-        });
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,4 +237,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

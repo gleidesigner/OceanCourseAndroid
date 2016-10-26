@@ -4,21 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.gleidesilva.bookslibrary.com.gleidesilva.MainActivity">
+    tools:context="com.gleidesilva.bookslibrary.BookDetailActivity">
 
-<!--    <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recicler_view_book"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>-->
+    </android.support.v7.widget.RecyclerView>
 
 
-    <GridView
-        android:id="@+id/recicler_view_book"
-        android:layout_width="match_parent"
-        android:numColumns="auto_fit"
-        android:layout_height="match_parent">
-    </GridView>
 <!--    <ProgressBar
         android:id="@+id/my_progress_bar"
         android:layout_width="wrap_content"
@@ -26,6 +20,5 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"/>-->
-
 
 </RelativeLayout>

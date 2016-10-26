@@ -31,11 +31,11 @@ public class BookDetailActivity extends AppCompatActivity {
     }
 
     public void initialView() {
-        title = (TextView) findViewById(R.id.detalhesTitulo);
-        autor = (TextView) findViewById(R.id.detalhesAutor);
-        pagina = (TextView) findViewById(R.id.detalhesPaginas);
-        ano = (TextView) findViewById(R.id.detalhesAno);
-        capa = (ImageView) findViewById(R.id.detalhesImageView);
+        title = (TextView) findViewById(R.id.detailTitulo);
+        autor = (TextView) findViewById(R.id.detailAutor);
+        pagina = (TextView) findViewById(R.id.detailPagina);
+        ano = (TextView) findViewById(R.id.detailAno);
+        capa = (ImageView) findViewById(R.id.detailImageView);
 
     }
 

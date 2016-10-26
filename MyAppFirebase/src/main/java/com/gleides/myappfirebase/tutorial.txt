@@ -1,0 +1,73 @@
+https://github.com/googlesamples/android-RuntimePermissions/tree/master/Application/src/main/java/com/example/android/system/runtimepermissions
+
+/**
+     * Abrir a camera verficando se existe Permissao
+     */
+    private void abrirCamera(){
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            verificaChamarPermissao();
+        } else {
+            // tenho permissao, chama a intent de camera
+            intentAbrirCamera();
+        }
+    }
+
+    private void verificaChamarPermissao() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE) || ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // exibir o motivo de esta precisando da permissao
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_READ_WRITE, REQUEST_PERMISSION);
+        } else {
+            ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_READ_WRITE, REQUEST_PERMISSION);
+        }
+    }
+
+
+
+@Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == REQUEST_PERMISSION){
+            if (PermissionUtil.verifyPermissions(grantResults)) {
+                // tem
+                Log.d("Ale","tem permissao");
+                intentAbrirCamera();
+            } else {
+                // nao tem a permissao
+                Log.d("Ale","nao tem permissao");
+            }
+        }else{
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_INTENT_CAMERA && resultCode == RESULT_OK){
+            if (caminhoDaImagem != null && caminhoDaImagem.exists()){
+                Ocean.glide(this)
+                        .load(Uri.fromFile(caminhoDaImagem))
+                        .build(GlideRequest.BYTES)
+                        .addDelegateImageBytes(this)
+                        .toBytes(300, 300);
+            }else{
+                Log.e("Ale","FILE null");
+            }
+        }else{
+            Log.d("Ale","nao usou a camera");
+        }
+    }
+
+
+
+@Override
+    public void createdImageBytes(byte[] bytes) {
+        bytesDaImagem = bytes;
+        Bitmap bitmap = Ocean.byteToBitmap(bytes);
+        imagemLivro.setImageBitmap(bitmap);
+    }

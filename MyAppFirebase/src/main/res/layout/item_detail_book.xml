@@ -9,26 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_margin="8dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/detalhesCapa"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:layout_margin="8dp"
-                android:padding="12dp" />
-
-            <Spinner
-                android:id="@+id/book_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
+        <ImageView
+            android:id="@+id/detalhesImageView"
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            android:layout_margin="8dp"
+            android:padding="12dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,24 +27,20 @@
             android:orientation="vertical"
             android:padding="12dp">
 
-            <EditText
+            <TextView
                 android:id="@+id/detalhesTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:inputType="textAutoComplete"
-                android:imeOptions="actionNext"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:hint="Título" />
+                android:text="Título" />
 
-            <EditText
+            <TextView
                 android:id="@+id/detalhesAutor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textAutoComplete"
-                android:imeOptions="actionNext"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:hint="Autor" />
+                android:text="Autor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,24 +49,20 @@
                 android:weightSum="2"
                 android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/detalhesPagina"
+                <TextView
+                    android:id="@+id/detalhesPaginas"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:inputType="number"
-                    android:imeOptions="actionNext"
                     android:layout_height="wrap_content"
-                    android:hint="Pagina" />
+                    android:text="Pagina" />
 
-                <EditText
+                <TextView
                     android:id="@+id/detalhesAno"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:inputType="number"
-                    android:imeOptions="actionSend"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:hint="Ano" />
+                    android:gravity="right"
+                    android:text="Ano" />
 
             </LinearLayout>
 
