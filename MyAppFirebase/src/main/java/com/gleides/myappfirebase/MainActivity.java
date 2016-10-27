@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
 import com.oceanbrasil.libocean.control.glide.ImageDelegate;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private File pathImage;
     private ImageView imgCapa;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference mRefLivros = database.getReference("livros");
+    DatabaseReference mRefLivros = database.getReference("livro");
 
     private byte[] byteImage;
     @Override
@@ -65,8 +68,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the com.gleides.myappfirebase.adapter to the categoria
         spCategoria.setAdapter(adapter);
+        //Set Image Default
+        imgCapa.setImageResource(R.mipmap.ic_launcher);
 
-        /*//Listener ao clicar na tecla ENTER
+        //Listener ao clicar na tecla ENTER
         edAno.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -78,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return false;
             }
-        });*/
+        });
 
         imgCapa.setOnClickListener(this);
 
@@ -180,9 +185,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void salvaBookFirebase() {
 
 
-        /*FirebaseStorage storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://myappocean.appspot.com").child("livrosImagens").child(pathImage.getName());
-        storageReference.putBytes(byteImage);*/
+        storageReference.putBytes(byteImage);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Enviando dandos...");
@@ -211,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void clearEditText() {
-        //imgCapa.setImageResource(R.mipmap.ic_launcher);
+        imgCapa.setImageResource(R.mipmap.ic_launcher);
         edtTitle.setText("");
         edAutor.setText("");
         edPagina.setText("");
@@ -221,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
+        //getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
