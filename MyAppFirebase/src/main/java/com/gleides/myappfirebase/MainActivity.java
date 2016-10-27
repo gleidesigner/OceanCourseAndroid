@@ -1,6 +1,5 @@
 package com.gleides.myappfirebase;
 
-import android.*;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,8 +27,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
 import com.oceanbrasil.libocean.control.glide.ImageDelegate;
@@ -43,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int REQUEST_INTENT_CAMERA = 10;
     private static final String[] PERMISSIONS_READ_WRITE = {Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private static final int REQUEST_PERMISSION = 11;
-    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-    DatabaseReference mDbLivro = firebaseDatabase.getReference("livros");
 
     private EditText edtTitle;
     private EditText edAutor;
@@ -54,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Spinner spCategoria;
     private File pathImage;
     private ImageView imgCapa;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference mRefLivros = database.getReference("livros");
 
     private byte[] byteImage;
     @Override
@@ -66,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.book_array,
                 android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.activity_list_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the com.gleides.myappfirebase.adapter to the categoria
         spCategoria.setAdapter(adapter);
 
@@ -182,11 +178,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void salvaBookFirebase() {
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://myappocean.appspot.com").child("livrosImagens").child(pathImage.getName());
-        storageReference.putBytes(byteImage);
 
-        /*final ProgressDialog progressDialog = new ProgressDialog(this);
+
+        /*FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://myappocean.appspot.com").child("livrosImagens").child(pathImage.getName());
+        storageReference.putBytes(byteImage);*/
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Enviando dandos...");
         progressDialog.show();
 
@@ -198,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         livro = new Livro(categoria, titulo, autor, pagina, ano);
 
-        mDbLivro.push().setValue(livro).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+        mRefLivros.push().setValue(livro).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
@@ -209,10 +207,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     progressDialog.setMessage("Error de envio de dandos!");
                 }
             }
-        });*/
+        });
     }
 
     public void clearEditText() {
+        //imgCapa.setImageResource(R.mipmap.ic_launcher);
         edtTitle.setText("");
         edAutor.setText("");
         edPagina.setText("");
