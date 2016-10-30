@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity implements ValueEventListener {
 
-    private ArrayList arrayList;
+    private ArrayList arrayList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class ListActivity extends AppCompatActivity implements ValueEventListene
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public void LerDadosFirebase(View view) {
+    public void LerDadosFirebase() {
         FirebaseDatabase.getInstance().getReference().child("livros").addValueEventListener(this);
     }
 

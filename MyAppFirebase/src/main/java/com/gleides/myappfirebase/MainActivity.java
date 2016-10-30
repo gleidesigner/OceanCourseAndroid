@@ -25,11 +25,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
 import com.oceanbrasil.libocean.control.glide.ImageDelegate;
@@ -182,24 +185,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgCapa = (ImageView) findViewById(R.id.detalhesCapa);
     }
 
+    public void checkDataLivro(Livro livro){
+
+    }
     public void salvaBookFirebase() {
-
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://myappocean.appspot.com").child("livrosImagens").child(pathImage.getName());
-        storageReference.putBytes(byteImage);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Enviando dandos...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String titulo = edtTitle.getText().toString();
-        String autor = edAutor.getText().toString();
-        Integer pagina = Integer.parseInt(edPagina.getText().toString());
-        Integer ano = Integer.parseInt(edAno.getText().toString());
-        String categoria = spCategoria.getSelectedItem().toString();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageReference = storage.getReferenceFromUrl("gs://myappocean.appspot.com")
+                .child("livrosImagens")
+                .child(pathImage.getName());
 
-        livro = new Livro(categoria, titulo, autor, pagina, ano);
+        storageReference.putBytes(byteImage).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                progressDialog.dismiss();
+
+                String titulo = edtTitle.getText().toString();
+                String autor = edAutor.getText().toString();
+                Integer pagina = Integer.parseInt(edPagina.getText().toString());
+                Integer ano = Integer.parseInt(edAno.getText().toString());
+                String categoria = spCategoria.getSelectedItem().toString();
+                String capa =  taskSnapshot.getDownloadUrl().toString();
+
+                livro = new Livro(categoria, titulo, autor, pagina, ano, capa);
+
+                mRefLivros.push().setValue(livro);
+                clearEditText();
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.setMessage("Error de envio de dandos!");
+            }
+        });
+
+
+        /*livro = new Livro(categoria, titulo, autor, pagina, ano, capa);
 
         mRefLivros.push().setValue(livro).addOnCompleteListener(this, new OnCompleteListener<Void>() {
             @Override
@@ -212,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     progressDialog.setMessage("Error de envio de dandos!");
                 }
             }
-        });
+        });*/
     }
 
     public void clearEditText() {
