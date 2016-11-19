@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.oceanmanaus.sensorsreader.MainActivity">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_hum"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icon_hum"
+                android:layout_alignParentLeft="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/humidity" />
+
+            <TextView
+                android:id="@+id/topico_hum"
+                android:layout_toRightOf="@id/icon_hum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tópico"/>
+
+            <TextView
+                android:id="@+id/payload_hum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/topico_hum"
+                android:layout_toRightOf="@id/icon_hum"
+                android:layout_marginTop="12dp"
+                android:textSize="18pt"
+                android:text="Payload"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_temp"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icon_temp"
+                android:layout_alignParentLeft="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/temperature" />
+
+            <TextView
+                android:id="@+id/topico_temp"
+                android:layout_toRightOf="@id/icon_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tópico"/>
+
+            <TextView
+                android:id="@+id/payload_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/topico_temp"
+                android:layout_toRightOf="@id/icon_temp"
+                android:layout_marginTop="12dp"
+                android:textSize="18pt"
+                android:text="Payload"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_gas"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icon_gas"
+                android:layout_alignParentLeft="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/gas" />
+
+            <TextView
+                android:id="@+id/topico_gas"
+                android:layout_toRightOf="@id/icon_gas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tópico"/>
+
+            <TextView
+                android:id="@+id/payload_gas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/topico_gas"
+                android:layout_toRightOf="@id/icon_gas"
+                android:layout_marginTop="12dp"
+                android:textSize="18pt"
+                android:text="Payload"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_light"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icon_light"
+                android:layout_alignParentLeft="true"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/light" />
+
+            <TextView
+                android:id="@+id/topico_light"
+                android:layout_toRightOf="@id/icon_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tópico"/>
+
+            <TextView
+                android:id="@+id/payload_light"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/topico_light"
+                android:layout_toRightOf="@id/icon_light"
+                android:layout_marginTop="12dp"
+                android:textSize="18pt"
+                android:text="Payload"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

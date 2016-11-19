@@ -1,0 +1,160 @@
+https://developers.google.com/android/for-all/vocab-words/
+
+https://gist.github.com/thiagomarques2015/988e99c4379e5964812f0b07b5b60c54
+
+https://developer.android.com/reference/android/widget/TextView.html
+
+http://www.kerry-beaches.com/images/contact-me-facebook-thumbnail.jpeg
+
+Common Android Views
+https://drive.google.com/file/d/0B5XIkMkayHgRMVljUVIyZzNmQUU/view
+
+Relative Layout
+https://developer.android.com/guide/topics/ui/layout/relative.html
+
+Logic
+https://gist.github.com/udacityandroid/ad088cd4e920f2a2d778
+
+https://developer.android.com/reference/android/content/Intent.html
+https://developer.android.com/guide/components/intents-filters.html
+https://material.google.com/style/color.html#
+https://www.materialpalette.com/
+
+android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.primeioapp.ocean.coffee.MainActivity"
+        android:id="@+id/tela">
+
+https://developer.android.com/training/material/shadows-clipping.html?hl=pt-br
+
+https://drive.google.com/file/d/0B53W5godVSuPSENJaVI2aDh5S1U/view?usp=drivesdk
+
+http://stackoverflow.com/questions/12070744/add-back-button-to-action-bar
+
+https://github.com/oceanbrasil/OceanLib
+
+http://gitlab.oceanmanaus.com/snippets/1/raw
+
+ok
+
+http://nuvem.oceanmanaus.com/index.php/s/BjJYwPbs1S8pmPF
+www.thiengo.com.br/sistema-de-permissoes-em-tempo-de-execucao-android-m
+
+
+http://jsoneditoronline.org/
+
+bit.ly/iconob
+
+
+final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Enviando Livro...");
+        progressDialog.show();
+
+
+
+
+
+reference.push().setValue(livro).addOnCompleteListener(this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    progressDialog.dismiss();
+                } else {
+                    progressDialog.dismiss();
+                }
+            }
+        });
+
+https://github.com/oceanbrasil/OceanLib
+
+http://gitlab.oceanmanaus.com/snippets/9/raw
+
+//Projetos sensores
+http://bit.ly/2f6mjAO
+http://bit.ly/2e6HTsc
+=======================================================================
+try {
+            IMqttToken token = client.connect();
+            token.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    // We are connected
+                    Log.d(TAG, "onSuccess");
+
+                    String payload = "Sender " + clientId + " está online!";
+                    byte[] encodedPayload;
+
+                    try {
+                        encodedPayload = payload.getBytes("UTF-8");
+
+                        MqttMessage message = new MqttMessage(encodedPayload);
+                        client.publish("/ocean/sensores/debug", message);
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (MqttPersistenceException e) {
+                        e.printStackTrace();
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+
+                    enviarDados();
+
+                    conectado = true;
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    // Something went wrong e.g. connection timeout or firewall problems
+                    Log.d(TAG, "onFailure");
+
+                }
+            });
+
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }try {
+            IMqttToken token = client.connect();
+            token.setActionCallback(new IMqttActionListener() {
+                @Override
+                public void onSuccess(IMqttToken asyncActionToken) {
+                    // We are connected
+                    Log.d(TAG, "onSuccess");
+
+                    String payload = "Sender " + clientId + " está online!";
+                    byte[] encodedPayload;
+
+                    try {
+                        encodedPayload = payload.getBytes("UTF-8");
+
+                        MqttMessage message = new MqttMessage(encodedPayload);
+                        client.publish("/ocean/sensores/debug", message);
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (MqttPersistenceException e) {
+                        e.printStackTrace();
+                    } catch (MqttException e) {
+                        e.printStackTrace();
+                    }
+
+                    enviarDados();
+
+                    conectado = true;
+                }
+
+                @Override
+                public void onFailure(IMqttToken asyncActionToken, Throwable exception) {
+                    // Something went wrong e.g. connection timeout or firewall problems
+                    Log.d(TAG, "onFailure");
+
+                }
+            });
+
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }

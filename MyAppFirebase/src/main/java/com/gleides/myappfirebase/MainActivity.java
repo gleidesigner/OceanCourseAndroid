@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -153,6 +154,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_INTENT_CAMERA && resultCode == RESULT_OK){
+            //Pega o tamanho real da foto
+            //pathImage.getTotalSpace();
             if (pathImage != null && pathImage.exists()){
                 Ocean.glide(this)
                         .load(Uri.fromFile(pathImage))

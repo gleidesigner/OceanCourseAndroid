@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.gleides.myappfirebase.adapter.ListAdapter;
+import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -16,7 +17,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity implements ValueEventListener {
-
     private ArrayList arrayList = new ArrayList();
 
     @Override
@@ -24,14 +24,16 @@ public class ListActivity extends AppCompatActivity implements ValueEventListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+
         ListAdapter adapter = new ListAdapter(this, arrayList);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recicler_view_book);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
 
-    public void LerDadosFirebase() {
-        FirebaseDatabase.getInstance().getReference().child("livros").addValueEventListener(this);
+        FirebaseDatabase.getInstance().getReference().child("livro").addValueEventListener(this);
+
+        /*FirebaseCrash.report(new Exception("My first Android non-fatal error"));
+        FirebaseCrash.log("Activity created");*/
     }
 
     @Override
